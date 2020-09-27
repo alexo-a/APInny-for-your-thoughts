@@ -58,18 +58,6 @@ const userController = {
                 select: '-__v'
             })
             .select('-__v')
-            //TODO remove thoughts when user is deleted
-            /*    .then(deletedUser => {
-                    if (!deletedUser) {
-                        return res.status(404).json({ message: 'No user with this id!' });
-                    }
-                    
-                    return Pizza.findOneAndUpdate(
-                        { _id: params.pizzaId },
-                        { $pull: { comments: params.userId } },
-                        { new: true }
-                    );
-                })*/
             .then(dbUserData => {
                 if (!dbUserData) {
                     res.status(404).json({ message: 'No User found with this id!' });
@@ -97,14 +85,6 @@ const userController = {
     deleteFriend({ params}, res) {
         console.log(`Removing friend ${params.friendId} from user ${params.userId}`);
         User.findOneAndUpdate({ _id: params.userId }, { $pull: { friends: params.friendId } }, { new: true })
- /*           .then(dbUserData => {
-                if (!dbUserData) {
-                    res.status(404).json({ message: 'No user found with this id!' });
-                    return;
-                }
-                res.json(dbUserData);
-            })
-            .catch(err => res.status(400).json(err));*/
         console.log(`Removing friend ${params.userId} from user ${params.friendId}`);
         User.findOneAndUpdate({ _id: params.friendId }, { $pull: { friends: params.userId } }, { new: true })
             .then(dbUserData => {
