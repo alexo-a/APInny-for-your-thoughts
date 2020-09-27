@@ -82,7 +82,6 @@ const userController = {
 
     addFriend({ params}, res) {
         console.log(`Adding friend ${params.friendId} to user ${params.userId}`);
-        if (User.exists({ _id: params.userId }))
         User.findOneAndUpdate({ _id: params.userId }, { $push: { friends: params.friendId } }, { new: true })
             
         User.findOneAndUpdate({ _id: params.friendId }, { $push: { friends: params.userId } }, { new: true })
